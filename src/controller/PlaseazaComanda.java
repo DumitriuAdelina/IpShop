@@ -45,13 +45,16 @@ public class PlaseazaComanda extends HttpServlet {
 			con = dbRes.getConnection();
 			HttpSession session = request.getSession();
 			List<Cos> listaCos = (ArrayList<Cos>)session.getAttribute("listaCos");
-			if(!listaCos.isEmpty())
+			if(listaCos!=null)
 	           {
 					for(int i=0;i<listaCos.size();i++)	
 					{
 						PreparedStatement ps=con.prepareStatement("update produse set stoc=stoc-? where id_produs="+listaCos.get(i).getP().getId_produs());
 						ps.setInt(1,listaCos.get(i).getCantitate());
-						ps.executeQuery();  
+						int affectedRows = ps.executeUpdate();
+				        if (affectedRows == 0) {
+				            throw new SQLException("plaseaza comanda failed");
+				        }
 					}
 					listaCos.clear();
 	           }
