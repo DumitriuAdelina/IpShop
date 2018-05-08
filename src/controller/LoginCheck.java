@@ -2,10 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -16,10 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import entitati.Cos;
-import entitati.Useri;
+import dao.ProduseDAO;
 import dao.UseriDAO;
+import dao.impl.ProduseDAOImpl;
 import dao.impl.UseriDAOImpl;
+import entitati.Cos;
+import entitati.Produse;
+import entitati.Useri;
+import recommender.Recommender;
 
 /**
  * Servlet implementation class LoginCheck
@@ -30,7 +33,7 @@ public class LoginCheck extends HttpServlet {
 	@Resource(name = "jdbc/bd")
     private DataSource dbRes;
 	private static final UseriDAO useriDAO = new UseriDAOImpl();
-       
+    private static final ProduseDAO produseDAO = new ProduseDAOImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -77,6 +80,14 @@ public class LoginCheck extends HttpServlet {
 				session.setAttribute("welcome", user.getNume_prenume());
 				session.setAttribute("tipUser", user.getTip());
 				session.setAttribute("listaCos", new ArrayList<Cos>());
+				Recommender recommender = new Recommender();
+				List<Long> listaRec = recommender.recommendTraining();
+				List<Produse> listaProdRec = produseDAO.searchProdusRecommender(listaRec, con);
+				/*for( Produse i : listaProdRec)
+				{
+					System.out.println(i.getNume_produs());
+				}*/
+				session.setAttribute("listaProdRec",listaProdRec);
 				response.sendRedirect("index.jsp");
 			}
 		} catch (SQLException e) {

@@ -68,4 +68,26 @@ public class ProduseDAOImpl implements ProduseDAO {
 		return produseGasite;
 	}
 
+	@Override
+	public List<Produse> searchProdusRecommender(List<Long> ids, Connection con) throws SQLException {
+		List<Produse> produseGasite = new ArrayList<Produse>();
+		for(Long i : ids){
+			PreparedStatement ps=con.prepareStatement("select * from produse where id_produs=?");
+			ps.setLong(1, i);
+			ResultSet rs=ps.executeQuery();  
+			while( rs.next())
+			{
+				
+				Produse produs=new Produse();
+				produs.setId_produs(rs.getInt("id_produs"));
+	            produs.setNume_produs(rs.getString("nume_produs"));
+	            produs.setStoc(rs.getInt("stoc"));
+	            produs.setPret(rs.getInt("pret"));
+	            produs.setId_categorie(rs.getInt("id_categorie"));
+	
+	            produseGasite.add(produs);
+			}
+		}
+		return produseGasite;	}
+
 }

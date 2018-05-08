@@ -104,6 +104,26 @@
 	<% } %>
 	
 	<br>
+	<h2>Recomandari</h2>
+	<table class="table table-condensed">
+		<tr>
+			<th>Nume</th>
+			<th>Stoc</th>
+			<th>Pret</th>
+			<th></th>
+		</tr>
+		
+		<tr>
+			 <c:forEach items="${listaProdRec}" var="produs" >
+		          <tr>
+		             <td>${produs.nume_produs}</td>
+		             <td>${produs.stoc}</td>
+		             <td>${produs.pret}</td>
+		          </tr>
+		       </c:forEach>
+		</tr>
+		
+	</table>
 	
 	<%
 		} 
@@ -123,6 +143,7 @@
 	<%
 		}
 	%>
+	
 	
 </body>
 </html>
