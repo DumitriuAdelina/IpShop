@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Context path="/proiect-pao">
+	<Resource name="jdbc/bd"
+      auth="Container"
+	  type="javax.sql.DataSource"
+	  username="pip"
+	  password="qwerty"
+	  driverClassName="com.mysql.jdbc.Driver"
+      url="jdbc:mysql://localhost:3306/proiectip"
+	  maxActive="15"
+	  maxIdle="3" />
+</Context>
