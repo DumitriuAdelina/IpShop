@@ -21,6 +21,9 @@
 		session.invalidate();
 		}
 	%>
+	<div class="row">
+			<div class="col-md-4 col-sm-4 col-xs-12"></div>
+			<div class="col-md-4 col-sm-4 col-xs-12">
 	<h2>Logare</h2><br>
 	<form method="post" action="LoginCheck">
     <div class="form-group">
@@ -33,6 +36,9 @@
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 	</form>
+	<div class="col-md-4 col-sm-4 col-xs-12"></div>
+			</div>
+		</div>
 	
 	<%	
 			HttpSession session1=request.getSession();
